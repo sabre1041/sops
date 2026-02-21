@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.12.2
+
+This is a re-release of 3.12.0 with no code changes.
+
+This reverts the modification to the cosign-installer to account for the latest
+cosign features.
+
 ## 3.12.1
 
 This is a re-release of 3.12.0 with no code changes.
