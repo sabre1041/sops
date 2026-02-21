@@ -178,24 +178,24 @@ jobs:
       upload-assets: true
       provenance-name: "sops-v${{ needs.release.outputs.version }}.intoto.jsonl"
 
-  ghcr-container-provenance:
-    needs: [ release ]
+  # ghcr-container-provenance:
+  #   needs: [ release ]
 
-    permissions:
-      actions: read # For detecting the Github Actions environment.
-      id-token: write # For creating OIDC tokens for signing.
-      packages: write # For uploading attestations.
+  #   permissions:
+  #     actions: read # For detecting the Github Actions environment.
+  #     id-token: write # For creating OIDC tokens for signing.
+  #     packages: write # For uploading attestations.
 
-    strategy:
-      matrix: ${{ fromJSON(needs.release.outputs.container-subjects) }}
+  #   strategy:
+  #     matrix: ${{ fromJSON(needs.release.outputs.container-subjects) }}
 
-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@v2.1.0
-    with:
-      image: ghcr.io/${{ matrix.image }}
-      digest: ${{ matrix.digest }}
-      registry-username: ${{ github.actor }}
-    secrets:
-      registry-password: ${{ secrets.GITHUB_TOKEN }}
+  #   uses: slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@v2.1.0
+  #   with:
+  #     image: ghcr.io/${{ matrix.image }}
+  #     digest: ${{ matrix.digest }}
+  #     registry-username: ${{ github.actor }}
+  #   secrets:
+  #     registry-password: ${{ secrets.GITHUB_TOKEN }}
 
   quay-container-provenance:
     needs: [ release ]

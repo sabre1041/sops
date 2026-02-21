@@ -164,8 +164,8 @@ signs:
 # xref: https://goreleaser.com/customization/docker/
 dockers:
   - image_templates:
-      - 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-amd64'
-      - 'quay.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-amd64'
+      # - 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-amd64'
+      - 'quay.io/ablock/sops:v{{ .Version }}-amd64'
     use: buildx
     goos: linux
     goarch: amd64
@@ -182,8 +182,8 @@ dockers:
       - "--label=org.opencontainers.image.source={{ .GitURL }}"
 
   - image_templates:
-      - 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-arm64'
-      - 'quay.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-arm64'
+      # - 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-arm64'
+      - 'quay.io/ablock/sops:v{{ .Version }}-arm64'
     use: buildx
     goos: linux
     goarch: arm64
@@ -200,8 +200,8 @@ dockers:
       - "--label=org.opencontainers.image.source={{ .GitURL }}"
 
   - image_templates:
-      - 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-alpine-amd64'
-      - 'quay.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-alpine-amd64'
+      # - 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-alpine-amd64'
+      - 'quay.io/ablock/sops:v{{ .Version }}-alpine-amd64'
     use: buildx
     goos: linux
     goarch: amd64
@@ -218,8 +218,8 @@ dockers:
       - "--label=org.opencontainers.image.source={{ .GitURL }}"
 
   - image_templates:
-      - 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-alpine-arm64'
-      - 'quay.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-alpine-arm64'
+      # - 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-alpine-arm64'
+      - 'quay.io/ablock/sops:v{{ .Version }}-alpine-arm64'
     use: buildx
     goos: linux
     goarch: arm64
@@ -237,25 +237,25 @@ dockers:
 
 # xref: https://goreleaser.com/customization/docker_manifest/
 docker_manifests:
-  - name_template: 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}'
-    image_templates:
-      - 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-amd64'
-      - 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-arm64'
+  # - name_template: 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}'
+  #   image_templates:
+  #     - 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-amd64'
+  #     - 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-arm64'
 
-  - name_template: 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-alpine'
-    image_templates:
-      - 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-alpine-amd64'
-      - 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-alpine-arm64'
+  # - name_template: 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-alpine'
+  #   image_templates:
+  #     - 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-alpine-amd64'
+  #     - 'ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-alpine-arm64'
 
-  - name_template: 'quay.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}'
+  - name_template: 'quay.io/ablock/sops:v{{ .Version }}'
     image_templates:
-      - 'quay.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-amd64'
-      - 'quay.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-arm64'
+      - 'quay.io/ablock/sops:v{{ .Version }}-amd64'
+      - 'quay.io/ablock/sops:v{{ .Version }}-arm64'
 
-  - name_template: 'quay.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-alpine'
+  - name_template: 'quay.io/ablock/sops:v{{ .Version }}-alpine'
     image_templates:
-      - 'quay.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-alpine-amd64'
-      - 'quay.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-alpine-arm64'
+      - 'quay.io/ablock/sops:v{{ .Version }}-alpine-amd64'
+      - 'quay.io/ablock/sops:v{{ .Version }}-alpine-arm64'
 
 # xref: https://goreleaser.com/customization/docker_sign/
 docker_signs:
@@ -341,22 +341,17 @@ release:
 
     These container images are available for the following architectures: `linux/amd64` and `linux/arm64`.
 
-    ### GitHub Container Registry
-
-    - `ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}`
-    - `ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-alpine`
-
     ### Quay.io
 
-    - `quay.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}`
-    - `quay.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }}-alpine`
+    - `quay.io/ablock/sops:v{{ .Version }}`
+    - `quay.io/ablock/sops:v{{ .Version }}-alpine`
 
     ### Verify container image signature
 
     The container images are signed using [Cosign](https://docs.sigstore.dev/cosign/overview/) with GitHub OIDC. To validate the signature of an image, run the following command:
 
     ```shell
-    cosign verify ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:v{{ .Version }} \
+    cosign verify quay.io/ablock/sops:v{{ .Version }} \
       --certificate-identity-regexp=https://github.com/{{ .Env.GITHUB_REPOSITORY_OWNER }} \
       --certificate-oidc-issuer=https://token.actions.githubusercontent.com \
       -o text
